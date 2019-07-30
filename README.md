@@ -1,2 +1,2 @@
 # Scripts
-Script files
+General script files.
