@@ -8,7 +8,7 @@
 
     <groupId>com.jbr.script</groupId>
     <artifactId>Script</artifactId>
-    <version>1.0.${build.number}</version>
+    <version>0.1-dbg-SNAPSHOT</version>
 
     <name>Script</name>
     <packaging>pom</packaging>
