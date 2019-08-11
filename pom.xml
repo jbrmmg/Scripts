@@ -20,43 +20,40 @@
     </properties>
 
     <build>
-      <plugins>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <configuration>
-            <descriptors>
-              <descriptor>assembly.xml</descriptor>
-            </descriptors>
-            <finalName>Script-${project.version}</finalName>
-            <appendAssemblyId>false</appendAssemblyId>
-          </configuration>
-          <executions>
-            <execution>
-              <id>make</id>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                    <finalName>Script-${project.version}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                  </configuration>
+                <executions>
+                    <execution>
+                        <id>make</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <distributionManagement>
         <repository>
             <id>Releases</id>
             <name>Internal Releases</name>
-            <url>
-                http://nexus.jbrmmg.me.uk:8081/repository/maven-releases
-            </url>
+            <url>${repository.url}/maven-releases</url>
         </repository>
         <snapshotRepository>
             <id>Snapshots</id>
             <name>Internal Releases</name>
-            <url>
-                http://nexus.jbrmmg.me.uk:8081/repository/maven-snapshots
-            </url>
+            <url>${repository.url}/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
