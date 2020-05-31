@@ -1,4 +1,4 @@
 #!/bin/bash
 
-su jason -l -c "google-drive-ocamlfuse -label $1 $*"
+su jason -l -c "google-drive-ocamlfuse -o allow_root -label $1 $*"
 exit 0
