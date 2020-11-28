@@ -38,34 +38,43 @@ echo Get Artifact from    : ${ArtifactVariableName}
 DeployArtifact=${!ArtifactVariableName}
 echo Artifact             : ${DeployArtifact}
 
+#Version
+VersionVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _VERSION)
+echo Get Version from     : ${VersionVariableName}
+
+DeployVersion=${!VersionVariableName}
+echo Version              : ${DeployVersion}
+
 # Delete the existing file
 if [ ${Environment} = "PDN" ]; then
-DeployFile=${DeploymentDir}/${DeployArtifact}-onejar.jar
+DeployFile=${DeploymentDir}/${DeployArtifact}.zip
+BinFile=${DeploymentDir}/${DeployArtifact}-onejar.jar
 ServiceNameTemp=${DeployArtifact}
 else
-DeployFile=${DeploymentDir}/${DeployArtifact}-${Environment}-onejar.jar
+DeployFile=${DeploymentDir}/${DeployArtifact}.zip
+BinFile=${DeploymentDir}/$DeployArtifact}-${Environment}-onejar.jar
 ServiceNameTemp=${DeployArtifact}-${Environment}
 fi
 ServiceName=${ServiceNameTemp,,}
 echo Service Name         : ${ServiceName}
+echo Bin File             : ${BinFile}
 
 # File to update:
-# /$DeploymentDir/$ServiceName-$environment-onejar.jar
+# /$DeploymentDir/$ServiceName-$environment.zip
 
 echo Deploy File          : ${DeployFile}
 rm -f ${DeployFile}
 
 # Update properties and logging configuration
 curl -sS -L ${Url} > ${DeployFile}
-sudo chgrp jbr ${DeployFile}
-sudo chmod 774 ${DeployFile}
 
-echo Extract config/${DeployArtifact}-${Environment}.properties
-unzip -p ${DeployFile} BOOT-INF/classes/config/${DeployArtifact}-${Environment}.properties >${DeploymentDir}/${DeployArtifact}-${Environment}.properties
-echo Extract config/${DeployArtifact}-${Environment}-log4j.xml
-unzip -p ${DeployFile} BOOT-INF/classes/config/${DeployArtifact}-${Environment}-log4j.xml >${DeploymentDir}/${DeployArtifact}-${Environment}-log4j.xml
 echo Extract config/${ServiceName}.service
-unzip -p ${DeployFile} BOOT-INF/classes/config/${ServiceName}.service >${DeploymentDir}/${ServiceName}.service
+unzip -p ${DeployFile} ${ServiceName}.service >${DeploymentDir}/${ServiceName}.service
 sudo mv ${DeploymentDir}/${ServiceName}.service /lib/systemd/system/${ServiceName}.service
 
-# Update service
+echo Extract ${ServiceName}-onejar.jar
+unzip -p ${DeployFile} ${DeployArtifact}-${DeployVersion}.jar >${BinFile}
+sudo chgrp jbr ${BinFile}
+sudo chmod 774 ${BinFile}
+
+rm -r ${DeployFile}
