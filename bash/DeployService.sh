@@ -43,6 +43,8 @@ VersionVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _VERSION)
 echo Get Version from     : ${VersionVariableName}
 
 DeployVersion=${!VersionVariableName}
+DeployVersions=($DeployVersion)
+DeployVersion=${DeployVersions[0]}
 echo Version              : ${DeployVersion}
 
 # Delete the existing file
@@ -52,7 +54,7 @@ BinFile=${DeploymentDir}/${DeployArtifact}-onejar.jar
 ServiceNameTemp=${DeployArtifact}
 else
 DeployFile=${DeploymentDir}/${DeployArtifact}.zip
-BinFile=${DeploymentDir}/$DeployArtifact}-${Environment}-onejar.jar
+BinFile=${DeploymentDir}/${DeployArtifact}-${Environment}-onejar.jar
 ServiceNameTemp=${DeployArtifact}-${Environment}
 fi
 ServiceName=${ServiceNameTemp,,}
