@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'scripts'}
     stages {
         stage('Hello World') {
             steps {
