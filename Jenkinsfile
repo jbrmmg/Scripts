@@ -58,7 +58,7 @@ pipeline {
                 script {
                     processTask()
 
-                    paralllel collectBuildEnv
+                    parallel collectBuildEnv
                 }
             }
         }
