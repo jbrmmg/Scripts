@@ -77,7 +77,7 @@ pipeline {
 
         stage('test') {
             steps {
-                nodesByLabel('Script',false)
+                nodesByLabel(label: 'Script', offline: false)
             }
         }
     }
