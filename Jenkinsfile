@@ -49,7 +49,9 @@ def processTask() {
 }
 
 pipeline {
-    agent any
+    agent {
+        label "admin-agent"
+    }
 
     stages {
         stage('agents-tasks') {
