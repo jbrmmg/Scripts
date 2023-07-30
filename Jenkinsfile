@@ -13,11 +13,11 @@ def getNodes(String label) {
     }
 }
 
-def dumpBuildEnv(String agentName) {
+def deployArtefact(String agentName) {
     node("${agentName}") {
         stage("Env in ${agentName}") {
+            // Output details.
             echo "running on agent, ${agentName}"
-
             echo "NODE_NAME = ${env.NODE_NAME}"
             echo "COMPONENT_ID = ${env.COMPONENT_ID}"
             echo "COMPONENT_NAME = ${env.COMPONENT_NAME}"
@@ -25,13 +25,24 @@ def dumpBuildEnv(String agentName) {
             echo "COMPONENT_VERSION = ${env.COMPONENT_VERSION}"
             echo "REPOSITORY_NAME = ${env.REPOSITORY_NAME}"
 
-            sh script: "curl -o extract.zip \"http://nexus.jbrmmg.me.uk:8081/nexus/service/local/artifact/maven/redirect?r=${env.REPOSITORY_NAME}&g=${env.COMPONENT_GROUP}&a=${env.COMPONENT_NAME}&v=${env.COMPONENT_VERSION}&p=zip\""
+            // Determine where the artefacts are deployed.
+            env.DEPLOY_DIRECTORY = "/usr/bin/jbr"
+            switch(env.REPOSITORY_NAME) {
+                case 'maven-snapshots':
+                    env.DEPLOY_DIRECTORY = "/usr/bin/jbr/dev"
+                    break
+            }
+
+            echo "DEPLOY_DIRECTORY = ${env.DEPLOY_DIRECTORY}"
+
+            // Download the artefact.
+            sh script: "curl -o artefact.zip \"http://nexus.jbrmmg.me.uk:8081/nexus/service/local/artifact/maven/redirect?r=${env.REPOSITORY_NAME}&g=${env.COMPONENT_GROUP}&a=${env.COMPONENT_NAME}&v=${env.COMPONENT_VERSION}&p=zip\""
         }
     }
 }
 
 def processTask() {
-    // Use the
+    // Use the node list
     def nodeList = getNodes( "${env.COMPONENT_NAME}" )
 
     for(i=0; i < nodeList.size(); i++) {
@@ -41,7 +52,7 @@ def processTask() {
         if (agentName != null) {
             println "Preparing task for " + agentName
             collectBuildEnv["node_" + agentName] = {
-                dumpBuildEnv(agentName)
+                deployArtefact(agentName)
             }
         }
     }
