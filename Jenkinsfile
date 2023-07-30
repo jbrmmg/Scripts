@@ -28,14 +28,16 @@ def deployArtefact(String agentName) {
             fileDeleteOperation includes: "/artifact.zip"
 
             // Delete the folder
+            echo "delete start"
             fileDeleteOperation includes: "/artifactExtract/*"
             folderDeleteOperation folderPath: "/artifactExtract"
+            echo "delete done"
 
             // Download the artefact.
             sh script: "curl -u download:password \"http://nexus.jbrmmg.me.uk:8081/service/rest/v1/search/assets?sort=version&direction=desc&repository=${env.REPOSITORY_NAME}&group=${env.COMPONENT_GROUP}&name=${env.COMPONENT_NAME}&version=${env.COMPONENT_VERSION}&maven.extension=zip\" | grep -Po '\"downloadUrl\" : \"\\K.+(?=\",)' | xargs curl -f -o artifact.zip"
 
             // Unzip the files
-            unzip zipFile: "artifact.zip", dir: "artafactExtract"
+            unzip zipFile: "artifact.zip", dir: "artifactExtract"
 
             // Clean up.
             fileDeleteOperation includes: "/artifact.zip"
