@@ -33,9 +33,9 @@ def dumpBuildEnv(String agentName) {
 
 def processTask() {
     // Replace label-string with the label name that you may have
-    def nodeList = getNodes("label-string")
+    def nodeList = getNodes("scripts")
 
-    for(i=0; i<nodeList.size(); i++) {
+    for(i=0; i < nodeList.size(); i++) {
         def agentName = nodeList[i]
 
         // skip the null entries in the nodeList
