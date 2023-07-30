@@ -77,7 +77,9 @@ pipeline {
 
         stage('test') {
             steps {
-                nodesByLabel(label: "${env.COMPONENT_NAME}", offline: false)
+                for (String node : nodesByLabel(label: "${env.COMPONENT_NAME}", offline: false)) {
+                    echo node
+                }
             }
         }
     }
