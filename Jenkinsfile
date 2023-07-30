@@ -27,7 +27,7 @@ def deployArtefact(String agentName) {
             // Download the artefact.
             sh script: "curl -o artefact.zip \"http://nexus.jbrmmg.me.uk:8081/nexus/service/local/artifact/maven/redirect?r=${env.REPOSITORY_NAME}&g=${env.COMPONENT_GROUP}&a=${env.COMPONENT_NAME}&v=${env.COMPONENT_VERSION}&p=zip\""
 
-            unzip(zipFile: artefact.zip, dir: "artefactExtract")
+            unzip(zipFile: "artefact.zip", dir: "artefactExtract")
         }
     }
 }
