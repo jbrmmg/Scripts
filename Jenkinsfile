@@ -29,7 +29,7 @@ def dumpBuildEnv(String agentName) {
 
 def processTask() {
     // Use the
-    def nodeList = getNodes( ${env.COMPONENT_NAME} )
+    def nodeList = getNodes( "${env.COMPONENT_NAME}" )
 
     for(i=0; i < nodeList.size(); i++) {
         def agentName = nodeList[i]
