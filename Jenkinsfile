@@ -25,19 +25,20 @@ def deployArtefact(String agentName) {
             echo "DEPLOY_DIRECTORY = ${env.DEPLOY_DIRECTORY}"
 
             // Delete the zip
-            fileDeleteOperation includes: "artifact.zip"
+            fileDeleteOperation includes: "/artifact.zip"
 
             // Delete the folder
-            folderDeleteOperation folderPath: "artifactExtract"
+            fileDeleteOperation includes: "/artifactExtract/*"
+            folderDeleteOperation folderPath: "/artifactExtract"
 
             // Download the artefact.
             sh script: "curl -u download:password \"http://nexus.jbrmmg.me.uk:8081/service/rest/v1/search/assets?sort=version&direction=desc&repository=${env.REPOSITORY_NAME}&group=${env.COMPONENT_GROUP}&name=${env.COMPONENT_NAME}&version=${env.COMPONENT_VERSION}&maven.extension=zip\" | grep -Po '\"downloadUrl\" : \"\\K.+(?=\",)' | xargs curl -f -o artifact.zip"
 
             // Unzip the files
-            unzip zipFile: "artifact.zip", dir: "artefactExtract"
+            unzip zipFile: "artifact.zip", dir: "artafactExtract"
 
             // Clean up.
-            fileDeleteOperation includes: "artifact.zip"
+            fileDeleteOperation includes: "/artifact.zip"
         }
     }
 }
