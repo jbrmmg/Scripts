@@ -23,6 +23,9 @@ def dumpBuildEnv(String agentName) {
             echo "COMPONENT_NAME = ${env.COMPONENT_NAME}"
             echo "COMPONENT_GROUP = ${env.COMPONENT_GROUP}"
             echo "COMPONENT_VERSION = ${env.COMPONENT_VERSION}"
+            echo "REPOSITORY_NAME = ${env.REPOSITORY_NAME}"
+
+            sh 'curl -o extract.zip "http://nexus.jbrmmg.me.uk:8081/nexus/service/local/artifact/maven/redirect?r=${env.REPOSITORY_NAME}&g=${env.COMPONENT_GROUP}&a=${env.COMPONENT_NAME}&v=${env.COMPONENT_VERSION}&p=zip"'
         }
     }
 }
