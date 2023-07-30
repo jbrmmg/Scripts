@@ -2,17 +2,6 @@ import jenkins.model.*
 
 collectBuildEnv = [:]
 
-@NonCPS
-def getNodes(String label) {
-    jenkins.model.Jenkins.instance.nodes.collect { thisAgent ->
-        if (thisAgent.labelString.contains("${label}")) {
-            // this works too
-            // if (this Agent.labelString == "${label}") {
-            return thisAgent.name
-        }
-    }
-}
-
 def deployArtefact(String agentName) {
     node("${agentName}") {
         stage("Env in ${agentName}") {
@@ -43,7 +32,7 @@ def deployArtefact(String agentName) {
 
 def processTask() {
     // Use the node list
-    def nodeList = getNodes( "${env.COMPONENT_NAME}" )
+    def nodeList = nodesByLabel (label: "${env.COMPONENT_NAME}", offline: false)
 
     for(i=0; i < nodeList.size(); i++) {
         def agentName = nodeList[i]
@@ -71,14 +60,6 @@ pipeline {
                     processTask()
 
                     parallel collectBuildEnv
-                }
-            }
-        }
-
-        stage('test') {
-            steps {
-                for (String node : nodesByLabel(label: "${env.COMPONENT_NAME}", offline: false)) {
-                    echo node
                 }
             }
         }
