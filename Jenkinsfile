@@ -34,7 +34,7 @@ def deployArtefact(String agentName) {
             sh script: "curl -u download:password \"http://nexus.jbrmmg.me.uk:8081/service/rest/v1/search/assets?sort=version&direction=desc&repository=${env.REPOSITORY_NAME}&group=${env.COMPONENT_GROUP}&name=${env.COMPONENT_NAME}&version=${env.COMPONENT_VERSION}&maven.extension=zip\" | grep -Po '\"downloadUrl\" : \"\\K.+(?=\",)' | xargs curl -f -o artifact.zip"
 
             // Unzip the files
-            unzip zipFile: "artifact.zip", dir: "artefectExtract"
+            unzip zipFile: "artifact.zip", dir: "artefactExtract"
 
             // Clean up.
             fileDeleteOperation includes: "artifact.zip"
