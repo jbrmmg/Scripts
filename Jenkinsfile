@@ -74,5 +74,11 @@ pipeline {
                 }
             }
         }
+
+        stage('test') {
+            steps {
+                nodesByLabel('Script',false)
+            }
+        }
     }
 }
