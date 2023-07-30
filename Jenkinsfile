@@ -25,7 +25,7 @@ def deployArtefact(String agentName) {
             echo "DEPLOY_DIRECTORY = ${env.DEPLOY_DIRECTORY}"
 
             // Download the artefact.
-            sh script: "curl -u download:password -o artefact.zip \"http://nexus.jbrmmg.me.uk:8081/nexus/service/local/artifact/maven/redirect?r=${env.REPOSITORY_NAME}&g=${env.COMPONENT_GROUP}&a=${env.COMPONENT_NAME}&v=${env.COMPONENT_VERSION}&p=zip\""
+            sh script: "curl -u download:password -o artefact.zip \"http://nexus.jbrmmg.me.uk:8081/service/rest/v1/search?repository=${env.REPOSITORY_NAME}&maven.groupId=${env.COMPONENT_GROUP}&maven.artifactId=${env.COMPONENT_NAME}&version=${env.COMPONENT_VERSION}&p=zip\""
 
             unzip zipFile: "artefact.zip", dir: "artefactExtract"
         }
