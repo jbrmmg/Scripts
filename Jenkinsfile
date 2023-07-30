@@ -49,7 +49,7 @@ def processTask() {
 }
 
 pipeline {
-    agent { any }
+    agent any
 
     stages {
         stage('agents-tasks') {
