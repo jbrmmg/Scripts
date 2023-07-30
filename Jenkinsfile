@@ -4,7 +4,7 @@ pipeline {
         stage('Hello World') {
             steps {
                 echo 'Hello World'
-                echo 'NODE_NAME = ${env.NODE_NAME}'
+                echo "NODE_NAME = ${env.NODE_NAME}"
             }
         }
     }
