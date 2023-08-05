@@ -9,8 +9,8 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>bash/</directory>
-            <outputDirectory>.</outputDirectory>
+            <directory>src/main/resources/bash/</directory>
+            <outputDirectory>deploy</outputDirectory>
             <includes>
                 <include>*.sh</include>
             </includes>

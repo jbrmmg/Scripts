@@ -23,10 +23,10 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <descriptors>
-                        <descriptor>assembly.xml</descriptor>
+                        <descriptor>src/main/resources/config/assembly.xml</descriptor>
                     </descriptors>
                     <finalName>Script-${project.version}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
