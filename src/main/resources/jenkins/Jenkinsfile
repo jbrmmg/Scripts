@@ -1,3 +1,5 @@
+package jenkins
+
 import jenkins.model.*
 
 collectBuildEnv = [:]
