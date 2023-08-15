@@ -6,21 +6,15 @@
 #
 echo Stop Service version ${version} ${script.build.date}
 
-echo Deployment Directory : ${DeploymentDir}
-echo GoEnvironment        : ${GO_ENVIRONMENT_NAME}
-
-#Artifact
-ArtifactVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _ARTIFACT_ID)
-echo Get Artifact from    : ${ArtifactVariableName}
-
-DeployArtifact=${!ArtifactVariableName}
-echo Artifact             : ${DeployArtifact}
+echo Repository           : $1
+echo ComponentName        : $2
+echo Deployment Directory : $3
 
 # Determine the service name
-if [ ${Environment} = "PDN" ]; then
-ServiceNameTemp=${DeployArtifact}
+if [ $1 = "NEXUS_RELEASES" ]; then
+ServiceNameTemp=$(echo $2 | tr '[:upper:]' '[:lower:]')
 else
-ServiceNameTemp=${DeployArtifact}-${Environment}
+ServiceNameTemp=$(echo $2-dev | tr '[:upper:]' '[:lower:]')
 fi
 ServiceName=${ServiceNameTemp,,}
 echo Service Name         : ${ServiceName}

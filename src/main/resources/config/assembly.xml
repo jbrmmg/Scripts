@@ -18,4 +18,20 @@
             <filtered>true</filtered>
         </fileSet>
     </fileSets>
+    <files>
+        <file>
+            <source>src/main/resources/bash/BlankDeploy.sh</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>pre_deploy.sh</destName>
+            <fileMode>0775</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>src/main/resources/bash/BlankDeploy.sh</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>post_deploy.sh</destName>
+            <fileMode>0775</fileMode>
+            <filtered>true</filtered>
+        </file>
+    </files>
 </assembly>
