@@ -13,50 +13,8 @@
 echo Deploy Artifact version ${version} ${script.build.date}
 
 echo Deployment Directory : ${DeploymentDir}
-echo GoEnvironment        : ${GO_ENVIRONMENT_NAME}
-echo Environment          : ${Environment}
+echo Deployment For       : ${deployment.script.artifact.name}
 
-#Determine the URL used for the artifact, the group and the artifact id.
-#URL
-UrlVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _LOCATION)
-echo Get URL from         : ${UrlVariableName}
-
-Url=${!UrlVariableName}
-echo URL                  : ${Url}
-
-#Group
-GroupVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _GROUP_ID)
-echo Get Group from       : ${GroupVariableName}
-
-Group=${!GroupVariableName}
-echo Group                : ${Group}
-
-#Artifact
-ArtifactVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _ARTIFACT_ID)
-echo Get Artifact from    : ${ArtifactVariableName}
-
-DeployArtifact=${!ArtifactVariableName}
-echo Artifact             : ${DeployArtifact}
-
-#Version
-VersionVariableName=$(compgen -A variable | grep GO_PACKAGE_ | grep _VERSION)
-echo Get Version from     : ${VersionVariableName}
-
-DeployVersion=${!VersionVariableName}
-DeployVersions=($DeployVersion)
-DeployVersion=${DeployVersions[0]}
-echo Version              : ${DeployVersion}
-
-# Delete the existing file
-if [ ${Environment} = "PDN" ]; then
-DeployFile=${DeploymentDir}/${DeployArtifact}.zip
-BinFile=${DeploymentDir}/${DeployArtifact}-onejar.jar
-ServiceNameTemp=${DeployArtifact}
-else
-DeployFile=${DeploymentDir}/${DeployArtifact}.zip
-BinFile=${DeploymentDir}/${DeployArtifact}-${Environment}-onejar.jar
-ServiceNameTemp=${DeployArtifact}-${Environment}
-fi
 ServiceName=${ServiceNameTemp,,}
 echo Service Name         : ${ServiceName}
 echo Bin File             : ${BinFile}
