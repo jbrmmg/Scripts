@@ -19,13 +19,9 @@ pipeline {
             }
         }
 
-        stage('deploy') {
+        stage('download') {
             when {
                 expression { return env.NODE_LABELS.contains(env.ENVIRONMENT + "-" + env.COMPONENT_NAME) && env.ACTION.equals("CREATED") }
-            }
-
-            environment {
-                DEPLOYMENT_DIR = "${env.REPOSITORY_NAME == "maven-releases" ? "/usr/bin/jbr" : "/usr/bin/jbr/dev"}"
             }
 
             steps {
@@ -47,13 +43,33 @@ pipeline {
 
                 echo "Download"
                 sh script: "cat response.xml | grep -Po '\"downloadUrl\" : \"\\K.+(?=\",)' | xargs curl -f -o artifact.zip"
+            }
+        }
 
+        stage('extract') {
+            when {
+                expression { return fileExists ('./artifact.zip') }
+            }
+
+            steps {
                 // Unzip the files
                 sh 'unzip ./artifact.zip -d ./artifactExtract'
 
                 // Clean up.
                 sh script: "rm -f artifact.zip"
+            }
+        }
 
+        stage('deploy') {
+            when {
+                expression { return fileExists ('./artifactExtract/pre_deploy.sh') }
+            }
+
+            environment {
+                DEPLOYMENT_DIR = "${env.REPOSITORY_NAME == "maven-releases" ? "/usr/bin/jbr" : "/usr/bin/jbr/dev"}"
+            }
+
+            steps {
                 // Run the pre-deployment script (if exists)
                 sh script: "./artifactExtract/pre_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${env.DEPLOYMENT_DIR}"
 
