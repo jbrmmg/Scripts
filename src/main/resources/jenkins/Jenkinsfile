@@ -62,7 +62,7 @@ pipeline {
 
         stage('deploy') {
             when {
-                expression { return fileExists ('./artifactExtract/pre_deploy.sh') }
+                expression { return fileExists ('./artifactExtract/pre_deploy.sh') && fileExists ('./artifactExtract/post_deploy.sh') }
             }
 
             environment {
