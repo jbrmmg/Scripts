@@ -1,8 +1,17 @@
 import jenkins.model.*
 
+/*
+ * Use SCM in jenkins to use this:
+ *
+ * URL:     https://github.com/jbrmmg/Scripts
+ * Branch:  Release
+ * Path:    ./src/main/resources/jenkins/Jenkinsfile
+ *
+ */
+
 pipeline {
     agent {
-        label "Deploy"
+        label env.ENVIRONMENT + "-" + env.COMPONENT_NAME
     }
 
     stages {
