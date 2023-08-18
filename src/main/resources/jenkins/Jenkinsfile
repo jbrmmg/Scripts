@@ -11,7 +11,7 @@ import jenkins.model.*
 
 pipeline {
     agent {
-        label env.ENVIRONMENT + "-" + env.COMPONENT_NAME
+        label env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
     }
 
     stages {
