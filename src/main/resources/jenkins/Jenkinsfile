@@ -7,6 +7,9 @@ import jenkins.model.*
  * Branch:  Release
  * Path:    ./src/main/resources/jenkins/Jenkinsfile
  *
+ * Need to trigger it with the web hook capabilities:
+ *  http://jenkins.jbrmmg.me.uk:8080/generic-webhook-trigger/invoke?token=NEXUS
+ *
  */
 
 pipeline {
@@ -30,7 +33,7 @@ pipeline {
 
         stage('download') {
             when {
-                expression { return env.NODE_LABELS.contains(env.ENVIRONMENT + "-" + env.COMPONENT_NAME) && env.ACTION.equals("CREATED") }
+                expression { return nv.ACTION.equals("CREATED") }
             }
 
             steps {
