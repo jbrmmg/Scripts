@@ -33,7 +33,7 @@ pipeline {
 
         stage('download') {
             when {
-                expression { return nv.ACTION.equals("CREATED") }
+                expression { return env.ACTION == "CREATED" }
             }
 
             steps {
