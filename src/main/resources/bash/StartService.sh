@@ -11,7 +11,7 @@ echo ComponentName        : $2
 echo Deployment Directory : $3
 
 # Determine the service name
-if [ $1 = "NEXUS_RELEASES" ]; then
+if [ $1 = "maven-releases" ]; then
 ServiceNameTemp=$(echo $2 | tr '[:upper:]' '[:lower:]')
 else
 ServiceNameTemp=$(echo $2-dev | tr '[:upper:]' '[:lower:]')
