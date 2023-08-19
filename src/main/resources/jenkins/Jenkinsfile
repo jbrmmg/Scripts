@@ -12,6 +12,8 @@ import jenkins.model.*
  *
  */
 
+def DEPLOYMENT_DIR = 'unknown'
+
 pipeline {
     agent {
         label env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
@@ -77,20 +79,22 @@ pipeline {
                 expression { return fileExists ('./artifactExtract/pre_deploy.sh') && fileExists ('./artifactExtract/post_deploy.sh') }
             }
 
-            environment {
-                DEPLOYMENT_DIR = "${env.REPOSITORY_NAME == "maven-releases" ? "/usr/bin/jbr" : "/usr/bin/jbr/dev"}"
-            }
-
             steps {
+                script {
+                    DEPLOYMENT_DIR = readFile("./artifactExtract/${env.REPOSITORY_NAME}-DeploymentDir.txt").trim()
+                }
+
+                echo "${DEPLOYMENT_DIR}"
+
                 // Run the pre-deployment script (if exists)
-                sh script: "./artifactExtract/pre_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${env.DEPLOYMENT_DIR}"
+                sh script: "./artifactExtract/pre_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${DEPLOYMENT_DIR}"
 
                 // Copy the files
                 // This requires that the deployment directory exists and is writable by jenkins user
-                sh script: "cp -R ./artifactExtract/deploy/. ${env.DEPLOYMENT_DIR}"
+                sh script: "cp -R ./artifactExtract/deploy/. ${DEPLOYMENT_DIR}"
 
                 // Run the post-deployment script (if exists)
-                sh script: "./artifactExtract/post_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${env.DEPLOYMENT_DIR}"
+                sh script: "./artifactExtract/post_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${DEPLOYMENT_DIR}"
             }
         }
     }
