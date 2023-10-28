@@ -35,7 +35,7 @@ pipeline {
 
         stage('download') {
             when {
-                expression { return env.ACTION == "CREATED" }
+                expression { return env.ACTION == "CREATED" && !env.COMPONENT_VERSION.contains("JBR") }
             }
 
             steps {
