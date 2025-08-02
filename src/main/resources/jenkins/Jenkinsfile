@@ -42,7 +42,7 @@ pipeline {
                 echo "NODE_NAME      = ${env.NODE_NAME}"
                 echo "ENVIRONMENT    = ${env.ENVIRONMENT}"
                 echo "COMPONENT_NAME = ${env.COMPONENT_NAME}"
-                echo "ACTION"        = ${env.ACTION}"
+                echo "ACTION         = ${env.ACTION}"
 
                 echo "Wait 10s"
                 sleep 10
