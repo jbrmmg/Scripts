@@ -19,6 +19,11 @@ pipeline {
         label env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
     }
 
+    options {
+        // Timeout the entire pipeline if it waits too long for a node
+        timeout(time: 5, unit: 'MINUTES')
+    }
+
     stages {
         stage('cleanup') {
             steps {
