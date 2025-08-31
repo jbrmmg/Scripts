@@ -16,7 +16,7 @@ def DEPLOYMENT_DIR = 'unknown'
 
 pipeline {
     agent {
-        label env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
+        label getLabel()
     }
 
     options {
@@ -103,5 +103,16 @@ pipeline {
                 sh script: "./artifactExtract/post_deploy.sh ${env.REPOSITORY_NAME} ${env.COMPONENT_NAME} ${DEPLOYMENT_DIR}"
             }
         }
+    }
+}
+
+def getLabel() {
+    // Allowed components
+    def knownComponents = ["MiddleTier-Backup","MiddleTier-Money","MySite.Angular.js","Script","Site","MiddleTier-Home"]
+
+    if(knownComponents.contains(env.COMPONENT_NAME)) {
+        return env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
+    } else {
+        return "maven-snapshots-Script"
     }
 }
