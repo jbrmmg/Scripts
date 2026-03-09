@@ -8,7 +8,7 @@
 
     <groupId>com.jbr.script</groupId>
     <artifactId>Script</artifactId>
-    <version>0.1-dbg-SNAPSHOT</version>
+    <version>26.1.0-SNAPSHOT</version>
 
     <name>Script</name>
     <packaging>pom</packaging>
@@ -18,6 +18,13 @@
         <script.build.date>${maven.build.timestamp}</script.build.date>
         <maven.build.timestamp.format>dd-MMM-yyyy</maven.build.timestamp.format>
     </properties>
+
+    <scm>
+        <connection>scm:git:git@github.com:jbrmmg/Scripts.git</connection>
+        <developerConnection>scm:git:git@github.com:jbrmmg/Scripts.git</developerConnection>
+        <url>https://github.com/jbrmmg/Scripts</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <plugins>
