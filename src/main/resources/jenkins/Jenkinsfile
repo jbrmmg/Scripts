@@ -108,7 +108,7 @@ pipeline {
 
 def getLabel() {
     // Allowed components
-    def knownComponents = ["MiddleTier-Backup","MiddleTier-Money","MySite.Angular.js","Script","Site","MiddleTier-Home"]
+    def knownComponents = ["MiddleTier-Backup","MiddleTier-Money","MySite.Angular.js","Script","Site","MiddleTier-Home","WordHelper"]
 
     if(knownComponents.contains(env.COMPONENT_NAME)) {
         return env.REPOSITORY_NAME + "-" + env.COMPONENT_NAME
