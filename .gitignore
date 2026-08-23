@@ -2,3 +2,4 @@
 /.idea/
 /.settings/
 *.iml
+/src/main/resources/github/env.secrets
